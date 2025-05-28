@@ -50,7 +50,7 @@
 
 \captionsetup[figure]{font=small,labelfont=bf, labelsep=period}
 \captionsetup[figure]{justification=l, singlelinecheck=false}
-\captionsetup[subfigure]{font=footnotesize, labelfont=bf, justification=centering}
+\captionsetup[subfigure]{font=footnotesize, labelfont=bf, justification=centering, position=top, aboveskip=2pt}
 \captionsetup[table]{font=small, labelfont=bf, labelsep=period}
 \captionsetup[table]{justification=l,singlelinecheck=false}
 
@@ -93,16 +93,16 @@
 Institutnavn: & {Institut for Geovidenskab og Naturforvaltning}  \\
 Forfatter: & {Johan Bo Kjær} \\
 KU-brugerID: & {MCG811} \\
-Titel og evt. undertitel: & {Titel, evt. undertitel} \\
+Titel: & {Titel, evt. undertitel} \\
 Emnebeskrivelse: & Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum porttitor rhoncus dui, vehicula pellentesque odio convallis id. Vestibulum mollis nulla ut sem luctus dictum. Sed scelerisque feugiat arcu, quis faucibus lorem viverra id. Aenean dignissim metus eu ligula sagittis, at commodo magna suscipit. \\
 Nøgleord: & GIS-modellering, klimaforandringer, kyst, oversvømmelse, stormfloder \\
 Vejleder: & Mikkel Fruergaard \\
 Dato: & \today \\
-Afleveringsdato: & 4. juni 2025 \\
+Afleveringsdato: & 4. juni 2025 kl. 11:00 \\
 Antal anslag: &  \\
-Totale antal sider: & \\
-Tak til: & Aabenraa, Guldborgsund og Vordingborg kommune for adgang til data \\
-& kgdflg
+Totale antal sider: &  \\
+Tak til: & Aabenraa, Guldborgsund og Vordingborg kommune for adgang til data og samarbejdet\\
+& Aabenraa Havn og COWI for indsigt i data og rapporter
 \end{tabularx} 
 \end{table}
 
@@ -118,7 +118,7 @@ Tak til: & Aabenraa, Guldborgsund og Vordingborg kommune for adgang til data \\
 \begin{table}[h]
 \def\arraystretch{1.5}
 \begin{tabularx}{\textwidth}{l X}
-\LARGE{Project title:} & \LARGE{Titel på afhandling, evt. undertitel} \\
+\Large{Project title:} & \Large{Titel på afhandling} \\
 Author: & {Johan Bo Kjær} \\
 Keywords: & \textit{climate change, coastal, GIS-modelling, inundation, storm surge}
 \end{tabularx}
@@ -134,12 +134,12 @@ Keywords: & \textit{climate change, coastal, GIS-modelling, inundation, storm su
 
 
 \section{Introduktion}
-
+\input{Udkast/introduktion/introduktion}
 
 
 \section{Teori}
 
-%UKDAST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 \input{Udkast/Teori/teori_rasterGIS}
 \input{Udkast/Teori/teori_stormflod}
 
@@ -149,9 +149,6 @@ Keywords: & \textit{climate change, coastal, GIS-modelling, inundation, storm su
 \input{Udkast/studieområder/studieområder}
 
 \section{Metoder}
-% DE RIGTIGE SIDER!!!!
-%\input{Sektioner/metoder/Databeskrivelse og databehandling}
-%\input{Sektioner/metoder/Inundation Model}
 
 %Alt dette er udkast og SKAL SLETTES!!!!
 \input{Udkast/Metode/metode_data_udkast}
@@ -159,13 +156,14 @@ Keywords: & \textit{climate change, coastal, GIS-modelling, inundation, storm su
 \input{Udkast/Metode/metode_analyse_udkast}
 
 
-\newpage
+
 \section{Resultater}
 \input{Udkast/Resultater/resultater}
-\newpage
+
 \section{Diskussion}
+\input{Udkast/diskussion/diskussion}
 
-
+\newpage
 \section{Konklusion}
 
 

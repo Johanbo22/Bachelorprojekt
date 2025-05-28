@@ -156,7 +156,7 @@ FUNCTION {write.url}
 {
   URL empty$
     { skip$ }
-    { "\newline<\url{" URL * "}>" * write$ }
+    { "<\url{" URL * "}>" * write$ }
   if$
   urldate empty$
     { skip$ }
