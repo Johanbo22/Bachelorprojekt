@@ -1,4 +1,4 @@
-% VIGTIGT! For at dokumentet kan compile, skal man benytte XeLaTeX eller LuaLaTeX som compiler. Dette kan gøres i Overleaf ved at gå til Menu -> Settings -> Compiler -> Vælg XeLaTeX/LuaLaTeX
+% VIGTIGT! For at dokumentet kan compile, skal man benytte LuaLaTeX som compiler. Dette kan gøres i Overleaf ved at gå til Menu -> Settings -> Compiler -> Vælg LuaLaTeX
 \documentclass[12pt]{article}
 \usepackage{KUstyle}
 \usepackage[margin=0.8in]{geometry} % Pakke til sidemargin
@@ -27,17 +27,17 @@
 \usepackage{colortbl} % til tabeller
 \usepackage{makecell} % til tabeller
 \usepackage{booktabs} % til tabeller
-\usepackage[normalem]{ulem}
-\useunder{\uline}{\ul}{}
-\usepackage{xurl}
-\usepackage{wrapfig}
+\usepackage[normalem]{ulem} %no one knows what this does.
+\useunder{\uline}{\ul}{} % øhh noget med namespace definition, tror jeg
+\usepackage{xurl} %ikke brugt
+\usepackage{wrapfig} %N/A
 \usepackage{subcaption}
 \usepackage{minted} % til kode
-\usepackage{tabularray}
+\usepackage{tabularray} %tabel
 \UseTblrLibrary{diagbox}
-\usepackage{booktabs,siunitx,array,threeparttable}
-\usepackage{diagbox}
-\usepackage{setspace}
+\usepackage{booktabs,siunitx,array,threeparttable} %%tabel
+\usepackage{diagbox} % dialog kasse, 
+\usepackage{setspace}%distance for marginkontrol
 
 
 
@@ -53,6 +53,7 @@
 \captionsetup[subfigure]{font=footnotesize, labelfont=bf, justification=centering, position=top, aboveskip=2pt}
 \captionsetup[table]{font=small, labelfont=bf, labelsep=period}
 \captionsetup[table]{justification=l,singlelinecheck=false}
+
 
 
 
@@ -94,15 +95,17 @@ Institutnavn: & {Institut for Geovidenskab og Naturforvaltning}  \\
 Forfatter: & {Johan Bo Kjær} \\
 KU-brugerID: & {MCG811} \\
 Titel: & {Stormfloder i det 21. århundrede, En kvalitetsundersøgelse af Inundation Model} \\
-Emnebeskrivelse: & Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum porttitor rhoncus dui, vehicula pellentesque odio convallis id. Vestibulum mollis nulla ut sem luctus dictum. Sed scelerisque feugiat arcu, quis faucibus lorem viverra id. Aenean dignissim metus eu ligula sagittis, at commodo magna suscipit. \\
+Emnebeskrivelse: & Dette projekt ønsker at undersøge kvaliteten og præcisionen af stormflodsmodellen Inundation Model ved at simulere stormflodshændelsen fra oktober 2023 på fire havnebyer i Danmark. Til at komplimentere denne analysere blev der undersøgt hvilke arealanvendelser der blev påvirket under stormfloden samt hvordan en fremskrevet og en statistisk stormflod vil påvirke områderne.\\
 Nøgleord: & GIS-modellering, klimaforandringer, kyst, oversvømmelse, stormfloder \\
 Vejleder: & Mikkel Fruergaard \\
 Dato: & \today \\
-Afleveringsdato: & 4. juni 2025 kl. 11:00 \\
+Afleveringsdato: & 4. juni 2025 kl. 12:00 \\
 Antal anslag: &  \\
 Totale antal sider: &  \\
 Tak til: & Aabenraa, Guldborgsund og Vordingborg kommune for adgang til data omkring oversvømmelsen fra stormfloden og det gode samarbejde\\
-& Aabenraa Havn og COWI for indsigt i data og rapporter
+& Aabenraa Havn og COWI for indsigt i data og rapporter. \\
+Note: & Projektet i skrevet i LaTex med den seneste version af TexLive og bruger LuaLaTex som compiler. Grafer og dataprocessering er håndteret i Python.\\
+& Alt source-koden for Tex og python filer kan findes på min GitHub-repository "https://github.com/Johanbo22/Bachelorprojekt". Billederne fra Meks I/S er ikke tilgængelige pga. ophavsret. 
 \end{tabularx} 
 \end{table}
 
@@ -118,13 +121,24 @@ Tak til: & Aabenraa, Guldborgsund og Vordingborg kommune for adgang til data omk
 \begin{table}[h]
 \def\arraystretch{1.5}
 \begin{tabularx}{\textwidth}{l X}
-\large{Project title:} & \large{Coastal Storm Surges in the 21st century} \\ & \large{A quality assessment of the Inundation Model} \\
+Project title: & Coastal Storm Surges in the 21st century \\ & A quality assessment of the Inundation Model \\
 Author: & {Johan Bo Kjær} \\
-Keywords: & \textit{climate change, coastal, GIS-modelling, inundation, storm surge}
+Keywords: & \textit{assessment, climate change, GIS-modelling, inundation, storm surge}
 \end{tabularx}
 \end{table}
-\begin{abstract}
-    Lorem Ipsum dominus scripticus
+\begin{abstract} % 1000 anslag
+
+    Coastal storm surges portend a major danger for coastal societies around the world due to the increasing sea level and the population growth along coastlines. As such fast and precise modelling of storm surges' extent on coastal towns are vital in planning and mangement.\\
+    
+    The focus of this study has therefore been to examine the raster-based storm surge model Inundation Model and assess its ability to simulate the storm surge of 2023 in the Danish coastal towns of Aabenraa, Gedser, Hesnæs and Præstø.\\
+    
+    This was an spatial and quantitative assessment of the models result compared with maps from the four study towns of the extent of the flooding occured during the storm surge in 2023. To compliment this, an analysis of the affected land use as well as a calculation and a simulation of a projected and a statistical storm surge based on two SSP scenarios were conducted.\\
+    
+    Gedser and Hesnæs were modelled to slightly smaller inundation extents as the observed event, while Aabenraa had a larger inundatation simulated due to emergency measures taken during the storm and Præstø had a smaller inundated extent due to an unforseen burst of a waterlock. The main land use affected were built-up and nature areas and the projected storm surges show large parts of the towns inundated due to sea level rise.\\
+    
+    The Inundation Model showed that is a relatively good model for fast and relative precise modelling of the 2023 storm surge event with two sites matching observed events. However due to the model being exclusive to a proprietary software and requiring high resolution datasets it's usage in municipalities for storm surge mangement is limited.
+
+    
 \end{abstract}
 
 \newpage
@@ -156,7 +170,7 @@ Keywords: & \textit{climate change, coastal, GIS-modelling, inundation, storm su
 \input{Udkast/Metode/metode_analyse_udkast}
 
 
-
+\newpage
 \section{Resultater}
 \input{Udkast/Resultater/resultater}
 
@@ -165,7 +179,7 @@ Keywords: & \textit{climate change, coastal, GIS-modelling, inundation, storm su
 
 \newpage
 \section{Konklusion}
-
+\input{Udkast/konklusion}
 
 \newpage
 \section{Referencer}
