@@ -45,6 +45,8 @@
 
 
 
+
+
 \hypersetup{breaklinks, colorlinks, urlcolor=black
 }
 
@@ -73,10 +75,9 @@
 \author{Johan Bo Kjær}
 \title{Stormfloder i det 21. århundrede}
 \subtitle{En kvalitetsundersøgelse af Inundation Model}
-\date{Dato: {\today}}
 \advisor{Vejleder: Mikkel Fruergaard}
 \fpimage{bil.jpg} % Hvis intet billede ønskes, skal kommandoen fjernes
-\fpcredit{Aabenraa midtby under stormfloden i oktober 2023. Kredit: Meks I/S}
+\fpcredit{Aabenraa midtby efter stormfloden i oktober 2023. Kredit: Meks I/S}
 
 
 \begin{document}
@@ -94,18 +95,18 @@
 Institutnavn: & {Institut for Geovidenskab og Naturforvaltning}  \\
 Forfatter: & {Johan Bo Kjær} \\
 KU-brugerID: & {MCG811} \\
-Titel: & {Stormfloder i det 21. århundrede, En kvalitetsundersøgelse af Inundation Model} \\
+Titel: & {Stormfloder i det 21. århundrede, En kvalitetsundersøgelse af Inundation Model.} \\
 Emnebeskrivelse: & Dette projekt ønsker at undersøge kvaliteten og præcisionen af stormflodsmodellen Inundation Model ved at simulere stormflodshændelsen fra oktober 2023 på fire havnebyer i Danmark. Til at komplimentere denne analysere blev der undersøgt hvilke arealanvendelser der blev påvirket under stormfloden samt hvordan en fremskrevet og en statistisk stormflod vil påvirke områderne.\\
-Nøgleord: & GIS-modellering, klimaforandringer, kyst, oversvømmelse, stormfloder \\
+& Til at vurdere modellen undersøges dens resultater, tilgængelighed, brugervenlighed, hastighed og generel anvendelighed som et værktøj til stormflodsmodellering.\\  
+Nøgleord: & GIS-modellering, klimaforandringer, oversvømmelse, rastermodel, stormfloder \\
 Vejleder: & Mikkel Fruergaard \\
-Dato: & \today \\
 Afleveringsdato: & 4. juni 2025 kl. 12:00 \\
-Antal anslag: &  \\
-Totale antal sider: &  \\
-Tak til: & Aabenraa, Guldborgsund og Vordingborg kommune for adgang til data omkring oversvømmelsen fra stormfloden og det gode samarbejde\\
-& Aabenraa Havn og COWI for indsigt i data og rapporter. \\
-Note: & Projektet i skrevet i LaTex med den seneste version af TexLive og bruger LuaLaTex som compiler. Grafer og dataprocessering er håndteret i Python.\\
-& Alt source-koden for Tex og python filer kan findes på min GitHub-repository "https://github.com/Johanbo22/Bachelorprojekt". Billederne fra Meks I/S er ikke tilgængelige pga. ophavsret. 
+Antal anslag: & 66.967 \\
+Totale antal sider: & 51 sider \\
+Tak til: & Aabenraa, Guldborgsund og Vordingborg kommune for adgang til data omkring oversvømmelsen fra stormfloden og det gode samarbejde.\\
+& Aabenraa Havn og COWI for tilladelse i indsigt i data og rapporter. \\
+Note: & Projektet i skrevet i LaTeX med den seneste version af TexLive og bruger LuaLaTex som compiler. Grafer og dataprocessering er håndteret i Python.\\
+& Alt source-koden for Tex og python filer kan findes på min GitHub-repository "https://github.com/Johanbo22/Bachelorprojekt". 
 \end{tabularx} 
 \end{table}
 
@@ -123,20 +124,20 @@ Note: & Projektet i skrevet i LaTex med den seneste version af TexLive og bruger
 \begin{tabularx}{\textwidth}{l X}
 Project title: & Coastal Storm Surges in the 21st century \\ & A quality assessment of the Inundation Model \\
 Author: & {Johan Bo Kjær} \\
-Keywords: & \textit{assessment, climate change, GIS-modelling, inundation, storm surge}
+Keywords: & \textit{climate change, GIS-modelling, inundation, raster-model, storm surge}
 \end{tabularx}
 \end{table}
-\begin{abstract} % 1000 anslag
-
-    Coastal storm surges portend a major danger for coastal societies around the world due to the increasing sea level and the population growth along coastlines. As such fast and precise modelling of storm surges' extent on coastal towns are vital in planning and mangement.\\
-    
+\begin{abstract}% 1000 anslag
+    \noindent
+    Coastal storm surges portend a major danger for coastal societies around the world due to the increasing sea level and the population growth along coastlines. Therefore fast and precise modelling of storm surges' extent on coastal towns are vital in planning and mangement.\\
     The focus of this study has therefore been to examine the raster-based storm surge model Inundation Model and assess its ability to simulate the storm surge of 2023 in the Danish coastal towns of Aabenraa, Gedser, Hesnæs and Præstø.\\
-    
+    \noindent
     This was an spatial and quantitative assessment of the models result compared with maps from the four study towns of the extent of the flooding occured during the storm surge in 2023. To compliment this, an analysis of the affected land use as well as a calculation and a simulation of a projected and a statistical storm surge based on two SSP scenarios were conducted.\\
-    
+    \noindent
     Gedser and Hesnæs were modelled to slightly smaller inundation extents as the observed event, while Aabenraa had a larger inundatation simulated due to emergency measures taken during the storm and Præstø had a smaller inundated extent due to an unforseen burst of a waterlock. The main land use affected were built-up and nature areas and the projected storm surges show large parts of the towns inundated due to sea level rise.\\
-    
-    The Inundation Model showed that is a relatively good model for fast and relative precise modelling of the 2023 storm surge event with two sites matching observed events. However due to the model being exclusive to a proprietary software and requiring high resolution datasets it's usage in municipalities for storm surge mangement is limited.
+    \noindent
+    The results show that the Inundation Model is a high quality model for fast and relative precise modelling of the 2023 storm surge event with two sites matching observed events.
+    However due to the model being exclusive to a proprietary software and requiring high resolution datasets it's usage in municipalities for storm surge mangement can be limited.
 
     
 \end{abstract}
@@ -162,6 +163,7 @@ Keywords: & \textit{assessment, climate change, GIS-modelling, inundation, storm
 \section{Studieområder}
 \input{Udkast/studieområder/studieområder}
 
+\newpage
 \section{Metoder}
 
 
