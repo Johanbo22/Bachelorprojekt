@@ -1,6 +1,7 @@
 '''
 Name:       Extract Hydroconditioning Inundation in QGIS
-Purpose:    Used to filter and clip the relevant hydrological           adaptations   within a DTM layer. Used for inundation purposes
+Purpose:    Used to filter and clip the relevant hydrological 
+            adaptations within a DTM layer. Used for inundation purposes
 Author:     Johan Bo Kjær (based on tool from Thomas Balstrøm 2019)   
 
 
