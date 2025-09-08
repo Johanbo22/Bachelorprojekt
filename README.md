@@ -9,3 +9,4 @@ scripts er containeren for de python scripts jeg selv har skrevet der er blevet 
 Main.tex er hoved tex filen
 jmr.bst er style filen for litteraturlisten
 
+projektet kan kun kompiles via LuaLatex eller Xelatex.
