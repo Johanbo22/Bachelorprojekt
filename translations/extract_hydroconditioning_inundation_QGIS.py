@@ -1,3 +1,12 @@
+'''
+Name:       Extract Hydroconditioning Inundation in QGIS
+Purpose:    Used to filter and clip the relevant hydrological           adaptations   within a DTM layer. Used for inundation purposes
+Author:     Johan Bo Kjær (based on tool from Thomas Balstrøm 2019)   
+
+
+Bugs:       The function call at the end is sometimes not correctly allocated to memory in python console in QGIS. Usually it works when redoing it.
+'''
+
 import os
 import sys
 import tempfile
