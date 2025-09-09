@@ -11,14 +11,8 @@ Bugs:       The function call at the end is sometimes not correctly allocated to
 import os
 import sys
 import tempfile
-from qgis.core import (
-    QgsApplication, QgsProject, QgsVectorLayer, QgsFeatureRequest,
-    QgsExpression, QgsVectorFileWriter, QgsCoordinateReferenceSystem,
-    QgsProcessingFeedback, QgsMessageLog, Qgis, QgsWkbTypes,
-    QgsGeometry, QgsFeature, QgsFields, QgsField
-)
+from qgis.core import (QgsProject, QgsVectorLayer, QgsFeatureRequest, QgsExpression, QgsProcessingFeedback)
 import processing
-from PyQt5.QtCore import QVariant
 
 def extract_hydroconditioning_inundation(line_adaptations="", horseshoe_adaptations="", dtm_mask="", output_workspace="", feedback=None):
 
