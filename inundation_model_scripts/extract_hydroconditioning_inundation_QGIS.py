@@ -6,13 +6,15 @@ Author:     Johan Bo Kjær (based on tool from Thomas Balstrøm 2019)
 
 
 Bugs:       The function call at the end is sometimes not correctly allocated to memory in python console in QGIS. Usually it works when redoing it.
+            Added the functionality for an plugin support in QGIS Desktop
 '''
 
 import os
 import sys
 import tempfile
-from qgis.core import (QgsProject, QgsVectorLayer, QgsFeatureRequest, QgsExpression, QgsProcessingFeedback)
+from qgis.core import (QgsProject, QgsVectorLayer, QgsFeatureRequest, QgsExpression, QgsProcessingFeedback, QgsWkbTypes)
 import processing
+from qgis.core import QgsProcessingAlgorithm, QgsProcessingParameterVectorLayer, QgsProcessingParameterRasterLayer, QgsProcessingParameterFolderDestination, QgsProcessingParameterFeatureSink, QgsProcessingException
 
 def extract_hydroconditioning_inundation(line_adaptations="", horseshoe_adaptations="", dtm_mask="", output_workspace="", feedback=None):
 
@@ -173,10 +175,11 @@ def extract_hydroconditioning_inundation(line_adaptations="", horseshoe_adaptati
         return {}
     
 def run_extract_hydroconditioning():
-    line_adaptations = r"C:\Users\joha4\Documents\lines_all.shp"
-    horseshoe_adaptations = r"C:\Users\joha4\Documents\horseshoes_all.shp" 
-    dtm_mask = r"C:\Users\joha4\Documents\mask.shp"
-    output_workspace = r"C:\Users\joha4\OneDrive\Skrivebord_LapTop\Bsc_artikel\qgis_translated_scripts_tb"
+    # this is used if the script is run from the python console
+    line_adaptations = r"C:\Users\joha4\OneDrive\Skrivebord_LapTop\Bsc_artikel\qgis_translated_scripts_tb\training data\adaptations\lines_all.shp"
+    horseshoe_adaptations = r"C:\Users\joha4\OneDrive\Skrivebord_LapTop\Bsc_artikel\qgis_translated_scripts_tb\training data\adaptations\horseshoes_all.shp" 
+    dtm_mask = r"C:\Users\joha4\OneDrive\Skrivebord_LapTop\Bsc_artikel\qgis_translated_scripts_tb\training data\adaptations\mask.shp"
+    output_workspace = r"C:\Users\joha4\OneDrive\Skrivebord_LapTop\Bsc_artikel\qgis_translated_scripts_tb\output"
     
     try:
         outputs = extract_hydroconditioning_inundation(
@@ -207,3 +210,51 @@ def run_extract_hydroconditioning():
             
     except Exception as e:
         print(f"Error during hydroconditioning extraction: {str(e)}")
+
+class ExtractHydroconditioningAlgorithm(QgsProcessingAlgorithm):
+    
+    INPUT_LINES = 'INPUT_LINES'
+    INPUT_HORSESHOES = 'INPUT_HORSESHOES'
+    INPUT_DTM_MASK = 'INPUT_DTM_MASK'
+    OUTPUT_WORKSPACE = 'OUTPUT_WORKSPACE'
+    OUTPUT = 'OUTPUT'
+
+    def initAlgorithm(self, config=None):
+        self.addParameter(QgsProcessingParameterVectorLayer(self.INPUT_LINES, "Line Features", [QgsWkbTypes.LineGeometry]))
+
+        self.addParameter(QgsProcessingParameterVectorLayer(self.INPUT_HORSESHOES, "Horseshoe shaped features", [QgsWkbTypes.LineGeometry]))
+
+        self.addParameter(QgsProcessingParameterVectorLayer(self.INPUT_DTM_MASK, "DTM Masking Layer", [QgsWkbTypes.PolygonGeometry]))
+
+        self.addParameter(QgsProcessingParameterFolderDestination(self.OUTPUT_WORKSPACE, "Output Workspace"))
+    
+    def processAlgorithm(self, parameters, context, feedback):
+        lines_layer = self.parameterAsVectorLayer(parameters, self.INPUT_LINES, context)
+        horseshoe_layer = self.parameterAsVectorLayer(parameters, self.INPUT_HORSESHOES, context)
+        dtm_mask_layer = self.parameterAsVectorLayer(parameters, self.INPUT_DTM_MASK, context)
+        output_workspace = self.parameterAsString(parameters, self.OUTPUT_WORKSPACE, context)
+
+        if not lines_layer or not horseshoe_layer or not dtm_mask_layer or not output_workspace:
+            raise QgsProcessingException("Invalid input parameters")
+        
+        result_path = extract_hydroconditioning_inundation(line_adaptations=lines_layer.source(), horseshoe_adaptations=horseshoe_layer.source(), dtm_mask=dtm_mask_layer.source(), output_workspace=output_workspace, feedback=feedback)
+
+        if result_path:
+            return {self.OUTPUT: result_path}
+        else:
+            raise QgsProcessingException("Failed to create output")
+    
+    def name(self):
+        return "extract hydroconditioning inundation"
+    
+    def displayName(self):
+        return "Extracts hydroconditioning adaptations for inundation"
+    
+    def group(self):
+        return "Hydrology"  
+
+    def groupId(self):
+        return "hydrology"
+    
+    def createInstance(self):
+        return ExtractHydroconditioningAlgorithm()
