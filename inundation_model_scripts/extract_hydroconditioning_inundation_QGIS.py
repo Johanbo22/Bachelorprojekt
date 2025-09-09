@@ -6,7 +6,7 @@ Author:     Johan Bo Kjær (based on tool from Thomas Balstrøm 2019)
 
 
 Bugs:       The function call at the end is sometimes not correctly allocated to memory in python console in QGIS. Usually it works when redoing it.
-            Added the functionality for an plugin support in QGIS Desktop
+            Added functionality to use as a tool in QGIS desktop. Also fixed issue with getting data into the project.
 '''
 
 import os
@@ -240,7 +240,20 @@ class ExtractHydroconditioningAlgorithm(QgsProcessingAlgorithm):
         result_path = extract_hydroconditioning_inundation(line_adaptations=lines_layer.source(), horseshoe_adaptations=horseshoe_layer.source(), dtm_mask=dtm_mask_layer.source(), output_workspace=output_workspace, feedback=feedback)
 
         if result_path:
+            project = QgsProject.instance()
+
+            for name, path in result_path.items():
+                print(f"  - {name}: {path}")
+                
+                # Load layer into qgis project
+                layer = QgsVectorLayer(path, name, "ogr")
+                if layer.isValid():
+                    project.addMapLayer(layer)
+                    print(f"    Added {name} to QGIS project")
+                else:
+                    print(f"    Warning: Could not load {name} into QGIS")
             return {self.OUTPUT: result_path}
+            
         else:
             raise QgsProcessingException("Failed to create output")
     
