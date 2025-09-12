@@ -1,6 +1,7 @@
 Primær repo for min Bsc
 
 inundation_model_scripts containeren er scripts til QGIS oversat fra Thomas Balstrøms originale scripts og modeller der fungerer i ArcGIS pro.
+- Nuværende er der kun til og mod Create Inundation værktøjet der virker. Burn barriers og trace inundation ikke første prio
 
 
 images containeren er til billeder og diagrammer. - MEKS containeren er underlagt ophavsret fra MEKS I/S 
