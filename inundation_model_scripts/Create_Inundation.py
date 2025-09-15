@@ -1,5 +1,3 @@
-##### NOT FINISHED
-
 import os, traceback
 import time
 from venv import create
@@ -94,7 +92,7 @@ def create_inundation(input_dtm_raster, line_at_sea, initial_sea_level_meters, s
             
             #check if raster layer is proper.
             stats = raster_layer.dataProvider().bandStatistics(1)
-            print(f"Raster min/max: {stats.minimumValue} / {stats.maximumValue}")
+            print(f"Raster min/max: {stats.minimumValue} / {stats.maximumValue}") # should be 1/1
 
             try:
                 print("Executing DA through cells, using the GRASS r.Cost algorithm...")
@@ -103,13 +101,13 @@ def create_inundation(input_dtm_raster, line_at_sea, initial_sea_level_meters, s
                     'start_points': sea_line_layer,
                     'output': temp_da,
                     'max_cost': 10000, # no limitation. need to change it so it is a variable of environment size to start point. 
-                    'null_cost': -1,
+                    'null_cost': -1, # treat NODATA values as impenetrable barriers
                     'memory': 500,
                     'flags': 'k'
                 })
                 print("Distance Accumulation completed")
                 print(f"Result object: {result_DA}")
-
+                # the result is also made from vertex[0] of the line, not the entire line. hmmm
                 out_layer = QgsRasterLayer(result_DA['output'], "DA_Result")
                 print(f"Is output layer valid: {out_layer.isValid()}")
             except Exception:
@@ -121,6 +119,7 @@ def create_inundation(input_dtm_raster, line_at_sea, initial_sea_level_meters, s
 
             print("Combining result with sea level value...")
 
+            # make the DA layer into a raster layer?
             temp_da_layer = QgsRasterLayer(temp_da, "temp_da")
             
 
@@ -141,9 +140,39 @@ def create_inundation(input_dtm_raster, line_at_sea, initial_sea_level_meters, s
 
             print("Converting raster to polygons...")
             inundated_poly = os.path.join(output_folder, f"InundatedPoly_{cm}.gpkg")
-            ##### forsæt herfra (svarer til line 126 i CreateInundation_TOOL_QGIS.py)
-        except:
-            pass
+            print(f"Converting...")
+
+            try:
+                #conversion tool
+                processing.run("gdal:polygonize", {
+                    'INPUT': inundated,
+                    'BAND': 1,
+                    'FIELD': 'value',
+                    'EIGHT_CONNECTEDNESS': True,
+                    'EXTRA': '',
+                    'OUTPUT': inundated_poly
+                })
+                print("Conversion from raster to polygon completed")
+            except Exception:
+                print(f"Failed to convert raster to polygon")
+                print(traceback.format_exc())
+
+            #clean up
+            print("Removing temporary files")
+            try:
+                if os.path.exists(temp_setnull):
+                    os.remove(temp_setnull)
+                    print("Temp feiles removed")
+            except:
+                print(f"Cannot remove temp files. Non necessary files are {temp_setnull}.\n Continuing...")
+                pass
+
+
+
+        except Exception as e:
+            print(f"Error processing: {m} meters: {str(e)}")
+    
+    print("Process is complete")
 
 
 
