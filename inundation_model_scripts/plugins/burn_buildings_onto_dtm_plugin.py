@@ -138,7 +138,7 @@ class BurningBuildingsIntoDTM(QgsProcessingAlgorithm):
     HEIGHT_VALUE_FOR_BUILDINGS = "HEIGHT_VALUE_FOR_BUILDINGS"
     OUTPUT_FOLDER = "OUTPUT_WORKSPACE"
 
-    def initAlgorithm(self):
+    def initAlgorithm(self, config=None):
         self.addParameter(QgsProcessingParameterRasterLayer(
             self.INPUT_DTM,
             "Input DTM / DHyM Raster layer",
