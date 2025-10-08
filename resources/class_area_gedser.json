@@ -1,0 +1,74 @@
+[
+  {
+    "CLASS": "Bebyggede områder",
+    "AREA_REAL_M2": "37805,12",
+    "AREA_REAL_HA": "3,780512",
+    "%_AREA_REAL": "0,1097",
+    "AREA_MODEL_M2": "36192,16",
+    "AREA_MODEL_HA": "3,619216",
+    "%_AREA_MODEL": "0,1091"
+  },
+  {
+    "CLASS": "Erhverv",
+    "AREA_REAL_M2": "73,6",
+    "AREA_REAL_HA": "0,00736",
+    "%_AREA_REAL": "0,0002",
+    "AREA_MODEL_M2": "59,84",
+    "AREA_MODEL_HA": "0,005984",
+    "%_AREA_MODEL": "0,0002"
+  },
+  {
+    "CLASS": "Rekreativt",
+    "AREA_REAL_M2": "37241,12",
+    "AREA_REAL_HA": "3,724112",
+    "%_AREA_REAL": "0,108",
+    "AREA_MODEL_M2": "36350,56",
+    "AREA_MODEL_HA": "3,635056",
+    "%_AREA_MODEL": "0,1096"
+  },
+  {
+    "CLASS": "Infrastruktur",
+    "AREA_REAL_M2": "39331,84",
+    "AREA_REAL_HA": "3,933184",
+    "%_AREA_REAL": "0,1141",
+    "AREA_MODEL_M2": "35784,64",
+    "AREA_MODEL_HA": "3,578464",
+    "%_AREA_MODEL": "0,1079"
+  },
+  {
+    "CLASS": "Landbrug",
+    "AREA_REAL_M2": "42086,72",
+    "AREA_REAL_HA": "4,208672",
+    "%_AREA_REAL": "0,1221",
+    "AREA_MODEL_M2": "41562,4",
+    "AREA_MODEL_HA": "4,15624",
+    "%_AREA_MODEL": "0,1253"
+  },
+  {
+    "CLASS": "Skov",
+    "AREA_REAL_M2": "4530,2",
+    "AREA_REAL_HA": "0,45302",
+    "%_AREA_REAL": "0,0131",
+    "AREA_MODEL_M2": "4440,8",
+    "AREA_MODEL_HA": "0,44408",
+    "%_AREA_MODEL": "0,0134"
+  },
+  {
+    "CLASS": "Naturområde",
+    "AREA_REAL_M2": "177465,1",
+    "AREA_REAL_HA": "17,74651",
+    "%_AREA_REAL": "0,5148",
+    "AREA_MODEL_M2": "171565,6",
+    "AREA_MODEL_HA": "17,15656",
+    "%_AREA_MODEL": "0,5171"
+  },
+  {
+    "CLASS": "Uklassificeret",
+    "AREA_REAL_M2": "6200,8",
+    "AREA_REAL_HA": "0,62008",
+    "%_AREA_REAL": "0,018",
+    "AREA_MODEL_M2": "5808,8",
+    "AREA_MODEL_HA": "0,58088",
+    "%_AREA_MODEL": "0,0175"
+  }
+]
