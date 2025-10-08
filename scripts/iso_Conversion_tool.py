@@ -4,7 +4,7 @@ import pandas as pd
 Dette tool kan hurtigt omdanne tidsstempler fra .tid til ISO tid
 '''
 
-file_path = r"C:\Users\joha4\OneDrive\Skrivebord_LapTop\Bachelorprojekt\Data_Raw\timestamp.xlsx"
+file_path: str = r"C:\Users\joha4\OneDrive\Skrivebord_LapTop\Bachelorprojekt\Data_Raw\timestamp.xlsx"
 
 df = pd.read_excel(file_path)
 
