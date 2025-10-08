@@ -1,0 +1,56 @@
+[
+  {
+    "CLASS": "Bebyggede områder",
+    "AREA_REAL_M2": "4128,32",
+    "AREA_REAL_HA": "0,412832",
+    "%_AREA_REAL": "0,1194",
+    "AREA_MODEL_M2": "3984,32",
+    "AREA_MODEL_HA": "0,398432",
+    "%_AREA_MODEL": "0,1215"
+  },
+  {
+    "CLASS": "Erhverv",
+    "AREA_REAL_M2": "2108,64",
+    "AREA_REAL_HA": "0,210864",
+    "%_AREA_REAL": "0,061",
+    "AREA_MODEL_M2": "2128,16",
+    "AREA_MODEL_HA": "0,212816",
+    "%_AREA_MODEL": "0,0649"
+  },
+  {
+    "CLASS": "Infrastruktur",
+    "AREA_REAL_M2": "3703,04",
+    "AREA_REAL_HA": "0,370304",
+    "%_AREA_REAL": "0,1071",
+    "AREA_MODEL_M2": "3762,08",
+    "AREA_MODEL_HA": "0,376208",
+    "%_AREA_MODEL": "0,1148"
+  },
+  {
+    "CLASS": "Skov",
+    "AREA_REAL_M2": "838,88",
+    "AREA_REAL_HA": "0,083888",
+    "%_AREA_REAL": "0,0243",
+    "AREA_MODEL_M2": "466,4",
+    "AREA_MODEL_HA": "0,04664",
+    "%_AREA_MODEL": "0,0142"
+  },
+  {
+    "CLASS": "Naturområde",
+    "AREA_REAL_M2": "22914,72",
+    "AREA_REAL_HA": "2,291472",
+    "%_AREA_REAL": "0,6628",
+    "AREA_MODEL_M2": "21568,64",
+    "AREA_MODEL_HA": "2,156864",
+    "%_AREA_MODEL": "0,658"
+  },
+  {
+    "CLASS": "Uklassificeret",
+    "AREA_REAL_M2": "878,56",
+    "AREA_REAL_HA": "0,087856",
+    "%_AREA_REAL": "0,0254",
+    "AREA_MODEL_M2": "871,04",
+    "AREA_MODEL_HA": "0,087104",
+    "%_AREA_MODEL": "0,0266"
+  }
+]
