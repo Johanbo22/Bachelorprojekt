@@ -1,0 +1,38 @@
+[
+  {
+    "location": "Aabenraa",
+    "observed_2023": "70,7",
+    "simulated_2023": "129,8",
+    "statistic_ssp45": "155,2",
+    "statistic_ssp85": "166,7",
+    "projected_2023_ssp45": "166,7",
+    "projected_2023_ssp85": "174,9"
+  },
+  {
+    "location": "Gedser",
+    "observed_2023": "34,5",
+    "simulated_2023": "33,2",
+    "statistic_ssp45": "205,1",
+    "statistic_ssp85": "219,7",
+    "projected_2023_ssp45": "201",
+    "projected_2023_ssp85": "218,1"
+  },
+  {
+    "location": "Hesnæs",
+    "observed_2023": "3,5",
+    "simulated_2023": "3,3",
+    "statistic_ssp45": "4,8",
+    "statistic_ssp85": "113,4",
+    "projected_2023_ssp45": "4,8",
+    "projected_2023_ssp85": "114,8"
+  },
+  {
+    "location": "Præstø",
+    "observed_2023": "53,5",
+    "simulated_2023": "39,8",
+    "statistic_ssp45": "75,7",
+    "statistic_ssp85": "82",
+    "projected_2023_ssp45": "84,1",
+    "projected_2023_ssp85": "89,7"
+  }
+]
