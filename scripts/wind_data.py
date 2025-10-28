@@ -6,7 +6,6 @@ from matplotlib.dates import DateFormatter, DayLocator
 import seaborn as sns
 from matplotlib.lines import Line2D
 
-# --- Configuration ---
 sheet_name = "vinddata_danmark"
 sheet_id = "1RhK_viiUoW2F_Qc6Wu1L-4nVdepBwTcnIYfxZDG58j0"
 URL = f"https://docs.google.com/spreadsheets/d/1RhK_viiUoW2F_Qc6Wu1L-4nVdepBwTcnIYfxZDG58j0/gviz/tq?tqx=out:csv&sheet=vinddata_danmark"
@@ -22,10 +21,6 @@ DIRECTION_TO_DEGREES = {
 }
 
 def get_uv_components(direction_string):
-    """
-    Converts a directional string (e.g., 'NNE') into (u, v) components
-    for the quiver plot. The components determine the arrow's direction.
-    """
     if direction_string not in DIRECTION_TO_DEGREES:
         print(f"Warning: Unknown direction '{direction_string}'. Skipping arrow.")
         return 0, 0
@@ -43,7 +38,6 @@ def get_uv_components(direction_string):
     return u, v
 
 def plot_wind_data(filename):
-    """Reads wind data and plots wind speed lines and direction arrows with improved aesthetics."""
     df = None 
     try:
         #
