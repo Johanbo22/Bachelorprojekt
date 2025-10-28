@@ -1,113 +1,165 @@
-import matplotlib.pyplot as plt
 import pandas as pd
+import matplotlib.pyplot as plt
 import numpy as np
-import os
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import r2_score
+from math import radians
+from matplotlib.dates import DateFormatter, DayLocator
+import seaborn as sns
+from matplotlib.lines import Line2D
 
-with_mimic = True
-if with_mimic:
+# --- Configuration ---
+sheet_name = "vinddata_danmark"
+sheet_id = "1RhK_viiUoW2F_Qc6Wu1L-4nVdepBwTcnIYfxZDG58j0"
+URL = f"https://docs.google.com/spreadsheets/d/1RhK_viiUoW2F_Qc6Wu1L-4nVdepBwTcnIYfxZDG58j0/gviz/tq?tqx=out:csv&sheet=vinddata_danmark"
 
-    # assign the x values as observed values from the storm surge event
-    observed: np.ndarray = np.array([74.9, 74.9, 37.3, 3.7, 56.4, 56.3])
+# Mapping of cardinal direction strings to degrees (0=East, 90=North, clockwise rotation)
+# This mapping is used because matplotlib's standard coordinate system is Cartesian 
+# (East=0, North=90).
+DIRECTION_TO_DEGREES = {
+    "N": 90.0, "NNE": 67.5, "NE": 45.0, "ENE": 22.5,
+    "E": 0.0, "ESE": 337.5, "SE": 315.0, "SSE": 292.5,
+    "S": 270.0, "SSW": 247.5, "SW": 225.0, "WSW": 202.5,
+    "W": 180.0, "WNW": 157.5, "NW": 135.0, "NNW": 112.5
+}
 
-    # assign the y values to the simulated values from the Inundaiton mOdel
-    simulated: np.ndarray = np.array([137.5, 71.4, 36.0, 3.6, 41.0, 66.1])
+def get_uv_components(direction_string):
+    """
+    Converts a directional string (e.g., 'NNE') into (u, v) components
+    for the quiver plot. The components determine the arrow's direction.
+    """
+    if direction_string not in DIRECTION_TO_DEGREES:
+        print(f"Warning: Unknown direction '{direction_string}'. Skipping arrow.")
+        return 0, 0
+    
+    # Get angle in degrees (Cartesian: East=0, North=90)
+    angle_deg = DIRECTION_TO_DEGREES[direction_string]
+    # Convert to radians for sin/cos functions
+    angle_rad = radians(angle_deg)
+    
+    # u (x-component) is cos(angle_rad)
+    u = np.cos(angle_rad)
+    # v (y-component) is sin(angle_rad)
+    v = np.sin(angle_rad)
+    
+    return u, v
 
-    # assign names of the study sites
-    locations: list[str] = ["Aabenraa", "Aabenraa (with emergency response)", "Gedser", "Hesnæs", "Præstø", "Præstø (Collapsed Sluice Gate)"]
+def plot_wind_data(filename):
+    """Reads wind data and plots wind speed lines and direction arrows with improved aesthetics."""
+    df = None 
+    try:
+        #
+        df = pd.read_csv(filename, sep=',', decimal=".", skipinitialspace=True)
+        df.columns = df.columns.str.strip()
+        df['tidspunkt'] = pd.to_datetime(df['tidspunkt'], format="%d/%m/%Y", errors="coerce")
+        
+        sns.set_theme(style="ticks")
+        sns.set_context(None, font_scale=1)
+        #plt.style.use('seaborn-v0_8-whitegrid') # Use a clean, modern style
+        plt.rcParams["font.family"] = "DeJavu Serif"
+        plt.rcParams["font.serif"] = "Times New Roman"
 
-    #random bullshit go
-    plt.rcParams["font.family"] = "serif"
-    plt.rcParams["font.serif"] = ["Times New Roman"]
-    plt.rcParams["axes.labelsize"] = 8
-    plt.rcParams["legend.fontsize"] = 8
-    plt.rcParams["xtick.labelsize"] = 15
-    plt.rcParams["ytick.labelsize"] = 15
-    plt.rcParams["axes.linewidth"] = 0.5
-    plt.rcParams["lines.linewidth"] = 1.0
-    plt.rcParams["grid.linewidth"] = 0.5
-    plt.rcParams["xtick.direction"] = "out"
-    plt.rcParams["ytick.direction"] = "out"
+        
+        fig, ax = plt.subplots(figsize=(7.5, 4.5)) # Slightly larger figure
 
+        sns.lineplot(data=df, x='tidspunkt', y='Middelvind', ax=ax, 
+                label='Mean wind speed', marker='o', linestyle='-', color='#2c7bb6', zorder=5) 
+        sns.lineplot(data=df, x='tidspunkt',  y='High10minMiddel', 
+                label='Highest 10-min mean wind speed', marker='X', linestyle='--', color='#fdae61', zorder=5)
+        sns.lineplot(data=df, x='tidspunkt',  y='HøjesteWind', 
+                label='Highest wind speed', marker='^', linestyle=':', color='#d7191c', zorder=5)
 
-    plt.figure(figsize=(6,4))
-    plt.scatter(observed, simulated, color="blue", marker="+", s=20)
+        
+        u_components = []
+        v_components = []
+        
+        for direction in df['retning']:
+            u, v = get_uv_components(direction)
+            u_components.append(u)
+            v_components.append(v)
 
-    # assign text to plot
-    # for x, y, label
-    for x, y, label in zip(observed.tolist(), simulated.tolist(), locations):
-        x_val: float = float(x)
-        y_val: float = float(y)
-        label_str: str = label
-        plt.text(x_val + 2, y_val - 1.5, label_str, size=8)
-else:
-    # assign the x values as observed values from the storm surge event
-    observed: np.ndarray = np.array([74.9, 37.3, 3.7, 56.3])
+        
+        arrow_y_position = -1.0 
+        
+        
+        arrow_start_y = [arrow_y_position - 0.5] * len(df)
+        arrow_start_x = df['tidspunkt']
 
-    # assign the y values to the simulated values from the Inundaiton mOdel
-    simulated: np.ndarray = np.array([137.5, 36.0, 3.6, 41.0])
+        
+        ax.quiver(
+            arrow_start_x, 
+            arrow_start_y, 
+            u_components, 
+            v_components, 
+            scale=75,          
+            width=0.0015,    
+            headwidth=4,      
+            headlength=4,
+            color='black', 
+            zorder=10 
+        )
 
-    # assign names of the study sites
-    locations: list[str] = ["Aabenraa", "Gedser", "Hesnæs", "Præstø"]
+        ##Draw a colored band
+        ax.axhspan(arrow_y_position - 5, arrow_y_position + 1, facecolor='lightgray', alpha=0.2, zorder=0)
 
-    #random bullshit go
-    plt.rcParams["font.family"] = "serif"
-    plt.rcParams["font.serif"] = ["Times New Roman"]
-    plt.rcParams["axes.labelsize"] = 8
-    plt.rcParams["legend.fontsize"] = 8
-    plt.rcParams["xtick.labelsize"] = 15
-    plt.rcParams["ytick.labelsize"] = 15
-    plt.rcParams["axes.linewidth"] = 0.5
-    plt.rcParams["lines.linewidth"] = 1.0
-    plt.rcParams["grid.linewidth"] = 0.5
-    plt.rcParams["xtick.direction"] = "out"
-    plt.rcParams["ytick.direction"] = "out"
+        
+        # text_offset = 0.5 
+        # for x, y, direction in zip(df['tidspunkt'], arrow_start_y, df['retning']):
+        #     ax.text(x, y + text_offset, direction, 
+        #             fontsize=9, ha='center', va='bottom', color='black', 
+        #             fontweight='bold', # Make the direction text stand out
+        #             bbox=dict(facecolor='white', alpha=0.9, edgecolor='none', boxstyle='round,pad=0.2'), zorder=11)
+        
+        
+        #ax.text(df['tidspunkt'].min(), arrow_y_position - 1.5, 'Wind Direction', 
+                #fontsize=11, va='center', ha='left', color='dimgray')
+        arrow_handle = Line2D([0], [0], color='black', marker=r'$\rightarrow$', markersize=10, linestyle='', label='Wind Direction', markeredgewidth=0)
+        handles, labels = ax.get_legend_handles_labels()
+        handles.append(arrow_handle)
+        labels.append("Wind Direction")
+        # 
+        #ax.set_title('Wind Speed and Direction Analysis', fontsize=18, fontweight='bold', pad=20)
+        ax.set_xlabel('Date', fontsize=9)
+        ax.set_ylabel('Wind Speed (ms⁻¹)', fontsize=10)
+        ax.tick_params(axis="both", labelsize=8)
+        
+        # F
+        date_format = DateFormatter("%d/%m\n%Y")
+        ax.xaxis.set_major_formatter(date_format)
+        ax.xaxis.set_major_locator(DayLocator(interval=3)) # Sy 3 days
 
+        #fig.autofmt_xdate(rotation=45, ha='right') 
 
-    plt.figure(figsize=(6,4))
-    plt.scatter(observed, simulated, color="blue", marker="+", s=20)
+        # d
+        y_min = arrow_y_position - 2 # Go lower than the arrow base
+        ax.set_ylim(bottom=y_min, top=df['HøjesteWind'].max() + 3)
+        
+        # 
+        #ax.grid(axis='y', linestyle='--', alpha=0.7)
+        ax.legend(handles=handles, labels=labels, loc='best',ncol=1, fontsize=7, facecolor="white", edgecolor="black", frameon=True, fancybox=True, shadow=False, borderpad=0.5, labelspacing=0.5)
 
-    # assign text to plot
-    # for x, y, label
-    for x, y, label in zip(observed.tolist(), simulated.tolist(), locations):
-        x_val: float = float(x)
-        y_val: float = float(y)
-        label_str: str = label
-        plt.text(x_val + 2, y_val - 1.5, label_str, size=8)
+        plt.tight_layout() 
+        save = True
+        if save: 
+            output_folder = r"C:\Users\joha4\OneDrive\Skrivebord_LapTop\Bsc_artikel"  
+            plt.savefig(f"{output_folder}/Danmark_vinddata.jpg", dpi=600, format="jpg")
+            print("Gemt")
+        else:
+            print("Ikke gemt")
+        plt.show()
+        
 
-# X = observed.reshape(-1, 1)
-# y = simulated
-# model = LinearRegression().fit(X, y)
-# y_pred = model.predict(X)
-# r2 = r2_score(y, y_pred)
-# draw the line of agreement
-lims: list[float] = [
-    0.0,
-    float(max(np.max(observed) + 10, np.max(simulated))+ 10)
-]
+    except FileNotFoundError:
+        print(f"Error: The file '{filename}' was not found.")
+    except KeyError as ke:
+        print(f"Error: Column '{ke}' not found. Check that the columns in your CSV are: tidspunkt, Middelvind, High10minMiddel, HøjesteWind, retning.")
+        if df is not None:
+            print(f"Available columns found: {list(df.columns)}")
+        else:
+            print("Data frame could not be loaded at all.")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
 
+    
 
-
-plt.plot(lims, lims, '--k' , alpha=0.5)
-plt.text(132, 125, "1:1", size=11)
-#plt.plot(observed, y_pred, color="red", linestyle="-", label=f"Linear fit: (R^2: {r2:.2f})")
-
-plt.xlabel("Observed inundated area (ha)", fontsize=9)
-plt.ylim(top=140)
-plt.xlim(right=140)
-plt.ylabel("Simulated inundated area (ha)", fontsize=9)
-plt.tick_params("both", labelsize=8)
-#plt.legend(loc="best", fontsize=8)
-plt.grid(False)
-plt.axis([0,140,0,140])
-plt.tight_layout()
-
-output_folder: str = r"C:\Users\joha4\OneDrive\Skrivebord_LapTop\Bsc_artikel\second_draft_29092025\images\engelsk\jpg"
-
-gemmes: bool = False
-if gemmes:
-    chartsave: str = os.path.join(output_folder, f"XY_plot_for_area.jpg")
-    format: str = "jpg"
-    plt.savefig(chartsave, dpi=600, format=format)
-    print(f"Gemt som {format} i {chartsave}")
+if __name__ == '__main__':
+    
+    plot_wind_data(URL)
