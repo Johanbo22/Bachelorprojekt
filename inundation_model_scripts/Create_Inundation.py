@@ -78,6 +78,19 @@ def create_inundation(input_dtm_raster, line_at_sea, initial_sea_level_meters, s
             else:
                 sea_line_layer = QgsVectorLayer(line_at_sea, "LineAtSea", "ogr")
             print(f"Line at Sea Layer: {sea_line_layer.name()}")
+
+            print(f"Densify line...")
+            densified_sea_line = processing.run("native:densifygeometriesgivenaninterval", {
+                'INPUT': sea_line_layer,
+                'INTERVAL': 5,
+                'OUTPUT': "memory:densified"
+            })['OUTPUT']
+
+            print(f"Extracting points along sea line...")
+            sea_points = processing.run("native:extractvertices", {
+                'INPUT': densified_sea_line,
+                'OUTPUT': "memory:sea_points"
+            })['OUTPUT']
             
             #validation of tempsetnull layer
             raster_layer = QgsRasterLayer(temp_setnull, "TempSetNull")
@@ -89,6 +102,7 @@ def create_inundation(input_dtm_raster, line_at_sea, initial_sea_level_meters, s
             print(f"Raster min/max: {stats.minimumValue} / {stats.maximumValue}") # should be 1/1
 
             try:
+                
                 print("Executing DA through cells, using the GRASS r.Cost algorithm...")
                 extent = dtm_layer.extent()
                 width_mu = extent.width()
@@ -102,7 +116,7 @@ def create_inundation(input_dtm_raster, line_at_sea, initial_sea_level_meters, s
 
                 result_DA = processing.run("grass7:r.cost", {
                     'input': temp_setnull,
-                    'start_points': sea_line_layer,
+                    'start_points': sea_points,
                     'output': temp_da,
                     'max_cost': max_cost, # no limitation. need to change it so it is a variable of environment size to start point. 
                     'null_cost': -1, # treat NODATA values as impenetrable barriers
