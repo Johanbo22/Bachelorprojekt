@@ -33,12 +33,6 @@ def create_inundation(input_dtm_raster, line_at_sea, initial_sea_level_meters, s
 
     print(f"Processing from {initial_cm}cm to {end_cm}cm with increment: {increment_cm}cm")
 
-    # dtm info
-    # dtm_provider = input_dtm_raster.dataProvider()
-    # dtm_extent = dtm_provider.extent()
-    # cell_size = dtm_extent.width() / input_dtm_raster.width()
-    # extent_str = f"{dtm_extent.xMinimum()},{dtm_extent.xMaximum()},{dtm_extent.yMinimum()},{dtm_extent.yMaximum()}"
-
     for cm in range(initial_cm, end_cm + 1, increment_cm):
         print("Converting to meters again")
         m = cm / 100.0
@@ -96,11 +90,21 @@ def create_inundation(input_dtm_raster, line_at_sea, initial_sea_level_meters, s
 
             try:
                 print("Executing DA through cells, using the GRASS r.Cost algorithm...")
+                extent = dtm_layer.extent()
+                width_mu = extent.width()
+                height_mu = extent.height()
+                res_x = dtm_layer.rasterUnitsPerPixelX()
+                res_y = dtm_layer.rasterUnitsPerPixelY()
+                cells_x = width_mu / res_x
+                cells_y = height_mu / res_y
+                max_cost = int((cells_x**2 + cells_y**2)**0.5) + 10
+                print(f"Max Cost: {max_cost}")
+
                 result_DA = processing.run("grass7:r.cost", {
                     'input': temp_setnull,
                     'start_points': sea_line_layer,
                     'output': temp_da,
-                    'max_cost': 10000, # no limitation. need to change it so it is a variable of environment size to start point. 
+                    'max_cost': max_cost, # no limitation. need to change it so it is a variable of environment size to start point. 
                     'null_cost': -1, # treat NODATA values as impenetrable barriers
                     'memory': 500,
                     'flags': 'k'
