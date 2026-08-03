@@ -1,17 +1,16 @@
-Primær repo for min Bsc
+# BSc
 
-inundation_model_scripts containeren er scripts til QGIS oversat fra Thomas Balstrøms originale scripts og modeller der fungerer i ArcGIS pro.
-- Nuværende er der kun til og mod Create Inundation værktøjet der virker. Burn barriers og trace inundation ikke første prio
+Main repository for my bachelor's project and the resulting article. Each directory beside the `article` is for the BSc project.
 
+Overview of directories:
+- `Data_Raw`: Contains the raw data files in .xlsx and .csv format used for general data aggregation and illustrations
+- `Sektioner`: Contains the structural sections of main.tex
+- `Udkast`: Contains the actual text of the sections in main.tex
+- `article`: Contains the translations of the BSc-project into english and any python code only used for that project.
+- `images`: Contains all illustrations and images used
+- `inundation_model_scripts`: Contains my own scripts to recreate the model's workflow in QGIS, also contains some utility scripts for ArcGIS Pro
+- `resources`: Contains JSON files of table and diagram contents.
+- `scripts`: Contains Python scripts for illustrations 
 
-images containeren er til billeder og diagrammer. - MEKS containeren er underlagt ophavsret fra MEKS I/S 
+`main.tex` is compiled using the LuaLaTeX compiler 18.8
 
-
-
-scripts er containeren for de python scripts der er blevet anvendt i projektet
-
-
-Main.tex er hoved tex filen
-jmr.bst er style filen for litteraturlisten
-
-projektet kan kun kompiles via LuaLatex.
