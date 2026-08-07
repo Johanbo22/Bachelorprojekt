@@ -41,7 +41,7 @@
 			}
 		\end{scope}
 		
-		\begin{scope}[xshift=0cm, yshift=4.45cm, red!80!black, line width=2.2pt]
+		\begin{scope}[xshift=0cm, yshift=4.45cm, red!65!black, line width=2.2pt]
 			\draw (-0.45,0) -- (0.45,0);
 			\draw (0,-0.45) -- (0,0.45);
 		\end{scope}
@@ -50,12 +50,13 @@
 			\draw (0,0) rectangle (2.4,3.4);
 			\foreach \r in {0,...,3} {
 				\foreach \c in {0,...,2} {
-					\draw ($(0.35,0.35)+(\c*0.75,\r*0.75)$) rectangle ++(0.4,0.4);
+					\draw ($(0.25,0.375)+(\c*0.75,\r*0.75)$) rectangle ++(0.4,0.4);
 				}
 			}
+			
 			\draw (2.4,0) rectangle (3.9,2.2);
 			\foreach \r in {0,...,1} {
-				\draw ($(2.75,0.35)+(0,\r*0.75)$) rectangle ++(0.4,0.4);
+				\draw ($(2.95,0.525)+(0,\r*0.75)$) rectangle ++(0.4,0.4);
 			}
 		\end{scope}
 		
