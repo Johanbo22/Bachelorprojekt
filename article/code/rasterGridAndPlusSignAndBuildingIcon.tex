@@ -4,6 +4,8 @@
 \usetikzlibrary{calc,backgrounds}
 
 \definecolor{bggray}{HTML}{F2F3F5}
+\definecolor{deepblue}{HTML}{1565C0}
+\definecolor{lightblue}{HTML}{90CAF9}
 
 \begin{document}
 	\begin{tikzpicture}[
@@ -11,10 +13,26 @@
 		line cap=round,
 		line join=round
 		]
+		
 		\fill[bggray] (-3.4,-0.4) rectangle (3.4,8.9);
 		
 		\begin{scope}[xshift=0cm, yshift=5.5cm]
 			\coordinate (O) at (0,0);
+			\newcommand{\cellfill}[3]{%
+				\fill[#3]
+				($(O) + #1*(-1,0.5) + #2*(1,0.5)$) --
+				($(O) + #1*(-1,0.5) + #2*(1,0.5) + (-1,0.5)$) --
+				($(O) + #1*(-1,0.5) + #2*(1,0.5) + (-1,0.5) + (1,0.5)$) --
+				($(O) + #1*(-1,0.5) + #2*(1,0.5) + (1,0.5)$) -- cycle;
+			}
+			
+			\cellfill{0}{0}{deepblue}
+			\cellfill{1}{0}{deepblue}
+			\cellfill{2}{0}{deepblue}
+			\cellfill{0}{1}{lightblue}
+			\cellfill{1}{1}{lightblue}
+			\cellfill{1}{2}{lightblue}
+			
 			\foreach \i in {0,...,3} {
 				\draw ($(O) + \i*(-1,0.5)$) -- ($(O) + \i*(-1,0.5) + 3*(1,0.5)$);
 			}
@@ -29,7 +47,6 @@
 		\end{scope}
 		
 		\begin{scope}[xshift=-1.95cm, yshift=0cm]
-			% Tall building (left)
 			\draw (0,0) rectangle (2.4,3.4);
 			\foreach \r in {0,...,3} {
 				\foreach \c in {0,...,2} {
